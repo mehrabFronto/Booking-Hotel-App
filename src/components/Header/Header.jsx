@@ -1,9 +1,32 @@
-import { useState } from "react";
-import { HiCalendar, HiSearch } from "react-icons/hi";
+import { useRef, useState } from "react";
+import { HiCalendar, HiMinus, HiPlus, HiSearch } from "react-icons/hi";
 import { MdLocationOn } from "react-icons/md";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 const Header = () => {
    const [destination, setDestination] = useState("");
+   const [openOptions, setOpenOptions] = useState(false);
+   const [options, setOptions] = useState({
+      adult: 1,
+      children: 0,
+      room: 1,
+   });
+
+   const optionTypes = [
+      { id: 1, type: "adult", minLimit: 1 },
+      { id: 2, type: "children", minLimit: 0 },
+      { id: 3, type: "room", minLimit: 1 },
+   ];
+
+   const handleOptions = (name, operation) => {
+      setOptions((prev) => {
+         return {
+            ...prev,
+            [name]: operation === "inc" ? options[name] + 1 : options[name] - 1,
+         };
+      });
+   };
+
    return (
       <div className="header">
          <div className="headerSearch">
@@ -27,9 +50,25 @@ const Header = () => {
             </div>
 
             <div className="headerSearchItem">
-               <div id="optionDropDown">
-                  1 adult &bull; 0 children &bull; 1 room
+               <div
+                  id="optionDropDown"
+                  onClick={() => setOpenOptions((prev) => !prev)}>
+                  {options.adult} adult &bull; {options.children} children
+                  &bull; {options.room} room
                </div>
+               {openOptions && (
+                  <GuestOptionsList setOpenOptions={setOpenOptions}>
+                     {optionTypes.map((item) => (
+                        <OptionItem
+                           key={item.id}
+                           type={item.type}
+                           minLimit={item.minLimit}
+                           options={options}
+                           handleOptions={handleOptions}
+                        />
+                     ))}
+                  </GuestOptionsList>
+               )}
                <span className="separator"></span>
             </div>
 
@@ -44,3 +83,39 @@ const Header = () => {
 };
 
 export default Header;
+
+const GuestOptionsList = ({ children, setOpenOptions }) => {
+   const optionsRef = useRef();
+
+   useOutsideClick(optionsRef, "optionDropDown", () => setOpenOptions(false));
+
+   return (
+      <div
+         className="guestOptions"
+         ref={optionsRef}>
+         {children}
+      </div>
+   );
+};
+
+const OptionItem = ({ type, minLimit, options, handleOptions }) => {
+   return (
+      <div className="guestOptionItem">
+         <span className="optionText">{type}</span>
+         <div className="optionCounter">
+            <button
+               className="optionCounterBtn"
+               onClick={() => handleOptions(type, "dec")}
+               disabled={options[type] <= minLimit}>
+               <HiMinus />
+            </button>
+            <span className="optionsCounterNumber">{options[type]}</span>
+            <button
+               className="optionCounterBtn"
+               onClick={() => handleOptions(type, "inc")}>
+               <HiPlus />
+            </button>
+         </div>
+      </div>
+   );
+};
