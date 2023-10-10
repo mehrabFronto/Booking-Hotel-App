@@ -5,10 +5,11 @@ import AppLayout from "./components/AppLayout/AppLayout";
 import Header from "./components/Header/Header";
 import HotelsList from "./components/HotelsList/HotelsList";
 import LocationList from "./components/LocationList/LocationList";
+import HotelsProvider from "./contexts/HotelsProvider";
 
 function App() {
    return (
-      <div>
+      <HotelsProvider>
          <Toaster />
          <Header />
          <Routes>
@@ -29,7 +30,7 @@ function App() {
                />
             </Route>
          </Routes>
-      </div>
+      </HotelsProvider>
    );
 }
 
