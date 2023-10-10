@@ -1,4 +1,8 @@
+import { format } from "date-fns";
 import { useRef, useState } from "react";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import { HiCalendar, HiMinus, HiPlus, HiSearch } from "react-icons/hi";
 import { MdLocationOn } from "react-icons/md";
 import useOutsideClick from "../../hooks/useOutsideClick";
@@ -12,11 +16,25 @@ const Header = () => {
       room: 1,
    });
 
+   const [date, setDate] = useState([
+      {
+         startDate: new Date(),
+         endDate: new Date(),
+         key: "selection",
+      },
+   ]);
+
+   const [openDate, setOpenDate] = useState(false);
+
    const optionTypes = [
       { id: 1, type: "adult", minLimit: 1 },
       { id: 2, type: "children", minLimit: 0 },
       { id: 3, type: "room", minLimit: 1 },
    ];
+
+   const dateRef = useRef();
+
+   useOutsideClick(dateRef, "dateDropDown", () => setOpenDate(false));
 
    const handleOptions = (name, operation) => {
       setOptions((prev) => {
@@ -43,9 +61,28 @@ const Header = () => {
                <span className="separator"></span>
             </div>
 
-            <div className="headerSearchItem">
+            <div
+               className="headerSearchItem"
+               ref={dateRef}>
                <HiCalendar className="headerIcon dateIcon" />
-               <div className="dateDropDown">10/08/2023</div>
+               <div
+                  id="dateDropDown"
+                  className="dateDropDown"
+                  onClick={() => setOpenDate((prev) => !prev)}>
+                  {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
+                     date[0].endDate,
+                     "MM/dd/yyyy",
+                  )}`}
+               </div>
+               {openDate && (
+                  <DateRange
+                     className="date"
+                     ranges={date}
+                     onChange={(item) => setDate([item.selection])}
+                     minDate={new Date()}
+                     moveRangeOnFirstSelection={true}
+                  />
+               )}
                <span className="separator"></span>
             </div>
 
