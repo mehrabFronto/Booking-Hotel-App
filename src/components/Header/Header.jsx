@@ -5,9 +5,16 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { HiCalendar, HiMinus, HiPlus, HiSearch } from "react-icons/hi";
 import { MdLocationOn } from "react-icons/md";
+import {
+   createSearchParams,
+   useNavigate,
+   useSearchParams,
+} from "react-router-dom";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
 const Header = () => {
+   const navigate = useNavigate();
+   const [searchParams, setSearchParams] = useSearchParams();
    const [destination, setDestination] = useState("");
    const [openOptions, setOpenOptions] = useState(false);
    const [options, setOptions] = useState({
@@ -42,6 +49,19 @@ const Header = () => {
             ...prev,
             [name]: operation === "inc" ? options[name] + 1 : options[name] - 1,
          };
+      });
+   };
+
+   const handleSearch = () => {
+      const encodedParams = createSearchParams({
+         destination: destination,
+         options: JSON.stringify(options),
+         date: JSON.stringify(date),
+      });
+      // setSearchParams(encodedParams);
+      navigate({
+         pathname: "/hotels",
+         search: encodedParams.toString(),
       });
    };
 
@@ -110,7 +130,9 @@ const Header = () => {
             </div>
 
             <div className="headerSearchItem">
-               <button className="headerSearchBtn">
+               <button
+                  className="headerSearchBtn"
+                  onClick={handleSearch}>
                   <HiSearch className="headerIcon" />
                </button>
             </div>
