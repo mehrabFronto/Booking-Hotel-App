@@ -15,7 +15,10 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 const Header = () => {
    const navigate = useNavigate();
    const [searchParams, setSearchParams] = useSearchParams();
-   const [destination, setDestination] = useState("");
+   const [destination, setDestination] = useState(
+      searchParams.get("destination"),
+      "",
+   );
    const [openOptions, setOpenOptions] = useState(false);
    const [options, setOptions] = useState({
       adult: 1,
