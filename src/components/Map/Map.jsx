@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { useSearchParams } from "react-router-dom";
+import useGeoLocation from "../../hooks/useGeoLocation";
 
 const Map = ({ markerLocations }) => {
    const [mapCenter, setMapCenter] = useState([50, 4]);
@@ -8,9 +9,20 @@ const Map = ({ markerLocations }) => {
    const lat = searchParams.get("lat");
    const lng = searchParams.get("lng");
 
+   const {
+      isLoading: isLoadingPosition,
+      position: geoLocationPosition,
+      getPosition,
+   } = useGeoLocation();
+
    useEffect(() => {
       if (lat && lng) setMapCenter([lat, lng]);
    }, [lat, lng]);
+
+   useEffect(() => {
+      if (geoLocationPosition?.lat && geoLocationPosition?.lng)
+         setMapCenter([geoLocationPosition.lat, geoLocationPosition.lng]);
+   }, [geoLocationPosition]);
 
    return (
       <div className="mapContainer">
@@ -23,6 +35,11 @@ const Map = ({ markerLocations }) => {
                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
             />
+            <button
+               className="getLocation"
+               onClick={getPosition}>
+               {isLoadingPosition ? "is loading..." : "Use Your Location"}
+            </button>
             <ChangeCenter position={mapCenter} />
             {markerLocations.map((item) => (
                <Marker
