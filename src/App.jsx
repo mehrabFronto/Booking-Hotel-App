@@ -5,6 +5,7 @@ import AppLayout from "./components/AppLayout/AppLayout";
 import Header from "./components/Header/Header";
 import HotelsList from "./components/HotelsList/HotelsList";
 import LocationList from "./components/LocationList/LocationList";
+import SingleHotel from "./components/SingleHotel/SingleHotel";
 import HotelsProvider from "./contexts/HotelsProvider";
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
                />
                <Route
                   path=":id"
-                  element={<div>single hotel</div>}
+                  element={<SingleHotel />}
                />
             </Route>
          </Routes>
