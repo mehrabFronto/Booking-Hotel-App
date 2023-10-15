@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import { useSearchParams } from "react-router-dom";
+import {
+   MapContainer,
+   Marker,
+   Popup,
+   TileLayer,
+   useMap,
+   useMapEvent,
+} from "react-leaflet";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import useGeoLocation from "../../hooks/useGeoLocation";
 
 const Map = ({ markerLocations }) => {
@@ -40,6 +47,7 @@ const Map = ({ markerLocations }) => {
                onClick={getPosition}>
                {isLoadingPosition ? "is loading..." : "Use Your Location"}
             </button>
+            <DetectClick />
             <ChangeCenter position={mapCenter} />
             {markerLocations.map((item) => (
                <Marker
@@ -58,5 +66,15 @@ export default Map;
 const ChangeCenter = ({ position }) => {
    const map = useMap();
    map.setView(position);
+   return null;
+};
+
+const DetectClick = () => {
+   const negative = useNavigate();
+   useMapEvent({
+      click: (e) =>
+         negative(`/bookmark?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
+   });
+
    return null;
 };
