@@ -73,7 +73,7 @@ const DetectClick = () => {
    const negative = useNavigate();
    useMapEvent({
       click: (e) =>
-         negative(`/bookmark?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
+         negative(`/bookmark/add?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
    });
 
    return null;
