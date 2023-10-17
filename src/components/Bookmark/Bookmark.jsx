@@ -4,7 +4,7 @@ import { useBookmarks } from "../../contexts/BookmarksListProvider";
 import Loader from "../Loader/Loader";
 
 const Bookmark = () => {
-   const { bookmarks, isLoading } = useBookmarks();
+   const { bookmarks, isLoading, currentBookmark } = useBookmarks();
 
    if (isLoading) return <Loader />;
 
@@ -17,7 +17,12 @@ const Bookmark = () => {
                   <Link
                      key={item.id}
                      to={`${item.id}?lat=${item.latitude}&lng=${item.longitude}`}>
-                     <div className="bookmarkItem">
+                     <div
+                        className={`bookmarkItem ${
+                           currentBookmark?.id === item.id
+                              ? "current-bookmark"
+                              : ""
+                        }`}>
                         <ReactCountryFlag
                            svg
                            countryCode={item.countryCode}
