@@ -4,15 +4,17 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { AiFillHome } from "react-icons/ai";
+import { BiUserCircle } from "react-icons/bi";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { HiCalendar, HiMinus, HiPlus, HiSearch } from "react-icons/hi";
-import { MdLocationOn } from "react-icons/md";
+import { MdLocationOn, MdLogout } from "react-icons/md";
 import {
    NavLink,
    createSearchParams,
    useNavigate,
    useSearchParams,
 } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthProvider";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
 const Header = () => {
@@ -151,6 +153,7 @@ const Header = () => {
                </button>
             </div>
          </div>
+         <User />
       </div>
    );
 };
@@ -189,6 +192,34 @@ const OptionItem = ({ type, minLimit, options, handleOptions }) => {
                <HiPlus />
             </button>
          </div>
+      </div>
+   );
+};
+
+const User = () => {
+   const navigate = useNavigate();
+   const { user, isAuthenticated, logout } = useAuth();
+
+   const logoutHandler = () => {
+      logout();
+      navigate("/");
+   };
+
+   return (
+      <div>
+         {isAuthenticated ? (
+            <div>
+               <strong>{user.name}</strong>
+               <button onClick={logoutHandler}>
+                  &nbsp;
+                  <MdLogout className="logout icon" />
+               </button>
+            </div>
+         ) : (
+            <NavLink to="/login">
+               <BiUserCircle style={{ width: "35px", height: "35px" }} />
+            </NavLink>
+         )}
       </div>
    );
 };
