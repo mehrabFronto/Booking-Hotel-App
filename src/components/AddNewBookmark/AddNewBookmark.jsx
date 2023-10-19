@@ -4,6 +4,7 @@ import ReactCountryFlag from "react-country-flag";
 import toast from "react-hot-toast";
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { useBookmarks } from "../../contexts/BookmarksListProvider";
 import useUrlLocation from "../../hooks/useUrlLocation";
 import Loader from "../Loader/Loader";
 
@@ -18,6 +19,25 @@ const AddNewBookmark = () => {
    const [countryCode, setCountryCode] = useState("");
    const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
    const [geocodingError, setGeocodingError] = useState(null);
+   const { createBookmark } = useBookmarks();
+
+   const submitHandler = async (e) => {
+      e.preventDefault();
+
+      if (!cityName || !country) return;
+
+      const newBookmark = {
+         cityName,
+         country,
+         countryCode,
+         latitude: lat,
+         longitude: lng,
+         host_location: cityName + " " + country,
+      };
+
+      await createBookmark(newBookmark);
+      navigate("/bookmark");
+   };
 
    useEffect(() => {
       if (!lat || !lng) return;
@@ -56,7 +76,9 @@ const AddNewBookmark = () => {
    return (
       <div>
          <h2>Bookmark New Location</h2>
-         <form className="form">
+         <form
+            className="form"
+            onSubmit={submitHandler}>
             <div className="formControl">
                <label htmlFor="cityName">City Name:</label>
                <input

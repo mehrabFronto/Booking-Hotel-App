@@ -1,7 +1,6 @@
 import axios from "axios";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import useFetch from "../hooks/useFetch";
 
 const BookmarksListContext = createContext();
 
@@ -9,19 +8,44 @@ const BASE_URL = "http://localhost:5000";
 
 const BookMarksListProvider = ({ children }) => {
    const [currentBookmark, setCurrentBookmark] = useState({});
-   const [isLoadingCurrHotel, setIsLoadingCurrBookmark] = useState(false);
+   const [bookmarks, setBookmarks] = useState([]);
+   const [isLoading, setIsLoading] = useState(false);
 
-   const { data: bookmarks, isLoading } = useFetch(`${BASE_URL}/bookmarks`);
+   useEffect(() => {
+      const fetchBookmarksList = async () => {
+         setIsLoading(true);
+         try {
+            const { data } = await axios.get(`${BASE_URL}/bookmarks`);
+            setBookmarks(data);
+         } catch (error) {
+            toast.error(error.message);
+         } finally {
+            setIsLoading(false);
+         }
+      };
+
+      fetchBookmarksList();
+   }, []);
 
    const getBookmark = async (id) => {
-      setIsLoadingCurrBookmark(true);
       try {
          const { data } = await axios.get(`${BASE_URL}/bookmarks/${id}`);
          setCurrentBookmark(data);
-         setIsLoadingCurrBookmark(false);
       } catch (error) {
          toast.error(error.message);
-         setIsLoadingCurrBookmark(false);
+      }
+   };
+
+   const createBookmark = async (newBookmark) => {
+      try {
+         const { data } = await axios.post(
+            `${BASE_URL}/bookmarks`,
+            newBookmark,
+         );
+         setCurrentBookmark(data);
+         setBookmarks((prev) => [...prev, data]);
+      } catch (error) {
+         toast.error(error.message);
       }
    };
 
@@ -31,8 +55,8 @@ const BookMarksListProvider = ({ children }) => {
             bookmarks,
             isLoading,
             currentBookmark,
-            isLoadingCurrHotel,
             getBookmark,
+            createBookmark,
          }}>
          {children}
       </BookmarksListContext.Provider>
