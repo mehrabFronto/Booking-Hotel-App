@@ -1334,15 +1334,6 @@
       "id": 1
     },
     {
-      "cityName": "Mahidasht",
-      "country": "Iran (Islamic Republic of)",
-      "countryCode": "IR",
-      "latitude": "34.32869425037187",
-      "longitude": "46.724183117022086",
-      "host_location": "Mahidasht Iran (Islamic Republic of)",
-      "id": 4
-    },
-    {
       "cityName": "Sanandaj",
       "country": "Iran (Islamic Republic of)",
       "countryCode": "IR",
@@ -1350,24 +1341,6 @@
       "longitude": "47.03114358752335",
       "host_location": "Sanandaj Iran (Islamic Republic of)",
       "id": 5
-    },
-    {
-      "cityName": "A Dakhla Oasis",
-      "country": "Egypt",
-      "countryCode": "EG",
-      "latitude": "25.02090651422749",
-      "longitude": "29.09059588509316",
-      "host_location": "A Dakhla Oasis Egypt",
-      "id": 7
-    },
-    {
-      "cityName": "Baba Kot",
-      "country": "Pakistan",
-      "countryCode": "PK",
-      "latitude": "28.43528783183169",
-      "longitude": "67.78003711374224",
-      "host_location": "Baba Kot Pakistan",
-      "id": 8
     },
     {
       "cityName": "Fardis",
@@ -1379,13 +1352,13 @@
       "id": 9
     },
     {
-      "cityName": "Neufchateau",
-      "country": "Belgium",
-      "countryCode": "BE",
-      "latitude": "49.85071279638117",
-      "longitude": "5.481728106820772",
-      "host_location": "Neufchateau Belgium",
-      "id": 10
+      "cityName": "Leopoldshohe",
+      "country": "Germany",
+      "countryCode": "DE",
+      "latitude": "52.00580800454948",
+      "longitude": "8.690185546875002",
+      "host_location": "Leopoldshohe Germany",
+      "id": 11
     }
   ]
 }
