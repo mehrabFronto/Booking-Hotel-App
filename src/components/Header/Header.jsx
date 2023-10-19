@@ -3,9 +3,12 @@ import { useRef, useState } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import { AiFillHome } from "react-icons/ai";
+import { BsFillBookmarkFill } from "react-icons/bs";
 import { HiCalendar, HiMinus, HiPlus, HiSearch } from "react-icons/hi";
 import { MdLocationOn } from "react-icons/md";
 import {
+   NavLink,
    createSearchParams,
    useNavigate,
    useSearchParams,
@@ -69,6 +72,15 @@ const Header = () => {
 
    return (
       <div className="header">
+         <NavLink to="/">
+            <AiFillHome style={{ width: "30px", height: "30px" }} />
+         </NavLink>
+
+         <NavLink to="/bookmark">
+            <BsFillBookmarkFill
+               style={{ width: "25px", height: "25px", marginTop: "2px" }}
+            />
+         </NavLink>
          <div className="headerSearch">
             <div className="headerSearchItem">
                <MdLocationOn className="headerIcon locationIcon" />
