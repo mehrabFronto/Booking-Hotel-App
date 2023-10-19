@@ -9,13 +9,13 @@ import { BsArrowLeft } from "react-icons/bs";
 const SingleBookmark = () => {
    const { id } = useParams();
    const navigate = useNavigate();
-   const { getBookmark, currentBookmark, isLoadingCurrHotel } = useBookmarks();
+   const { getBookmark, currentBookmark, isLoading } = useBookmarks();
 
    useEffect(() => {
       getBookmark(id);
    }, [id]);
 
-   if (isLoadingCurrHotel) return <Loader />;
+   if (isLoading) return <Loader />;
 
    return (
       <div>
