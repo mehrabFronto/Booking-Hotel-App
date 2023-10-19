@@ -1,6 +1,7 @@
 import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router";
 import "./App.css";
+import AddNewBookmark from "./components/AddNewBookmark/AddNewBookmark";
 import AppLayout from "./components/AppLayout/AppLayout";
 import Bookmark from "./components/Bookmark/Bookmark";
 import BookmarkLayout from "./components/BookmarkLayout/BookmarkLayout";
@@ -48,7 +49,7 @@ function App() {
                   />
                   <Route
                      path="add"
-                     element={<div>add bookmark</div>}
+                     element={<AddNewBookmark />}
                   />
                </Route>
             </Routes>
