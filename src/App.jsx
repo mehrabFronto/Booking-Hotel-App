@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import HotelsList from "./components/HotelsList/HotelsList";
 import LocationList from "./components/LocationList/LocationList";
 import Login from "./components/Login/Login";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import SingleBookmark from "./components/SingleBookmark/SingleBookmark";
 import SingleHotel from "./components/SingleHotel/SingleHotel";
 import AuthProvider from "./contexts/AuthProvider";
@@ -41,7 +42,11 @@ function App() {
                   </Route>
                   <Route
                      path="/bookmark"
-                     element={<BookmarkLayout />}>
+                     element={
+                        <ProtectedRoute>
+                           <BookmarkLayout />
+                        </ProtectedRoute>
+                     }>
                      <Route
                         index
                         element={<Bookmark />}
