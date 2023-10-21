@@ -39,7 +39,11 @@ button:disabled {
 }
 
 a {
-   color: inherit;
+   color: var(--text-700);
    text-decoration: none;
    cursor: pointer;
+}
+
+a:active {
+   color: var(--primary-700);
 }
