@@ -8,12 +8,11 @@
 
 Here're some of the project's best features:
 
-*   Advanced state management using context+reducer
-*   Adavnced routing using RRD v6
-*   Locate position on map, Working on map
-*   Search and filter on database based on seacrhParams
-*   Using context on async actions
-*   Fake AuthProvider on app
-*   Protected route
+*	Using Context+Reducer for advanced state management to reduce unnecessary re-renders.
+*	Implementing advanced routing with RRD v6.
+*	Utilizing a map to locate positions to raise accuracy.
+*	Using Context on async actions to expand data accessibility.
+*	Defined protected routes to improve security measures and reduce unauthorized access instances
+
 
 <p id="description">Because of json-server, the project could not be deployed on a server</p>
